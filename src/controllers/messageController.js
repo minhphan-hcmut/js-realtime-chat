@@ -11,7 +11,6 @@ class MessageController {
             next(err);
         }
     }
-    
 }
 
 

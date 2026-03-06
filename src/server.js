@@ -1,24 +1,28 @@
-import connectDb from "./config/database.js";
-import messageRoutes from "./routes/messageRoutes.js"
-import { configDotenv } from "dotenv";
+import 'dotenv/config'
 import  express from "express";
 import cors from 'cors';
+import http from 'http';
+import { WebSocketServer } from 'ws';
 
-const app = express()
-configDotenv()
-const { PORT } = process.env;
-try {
-    app.use(cors());
-    app.use(express.json());
-    app.get('/health', function (req, res, next) {
-        res.json({status: "OK"})
-    })
-    app.use('/api/v1/messages', messageRoutes)
-    connectDb();
-    app.listen(PORT);
-    console.log(`app listern on port ${PORT}`)
-}
-catch (err){
-    console.log(err);
-    process.exit(1);
-}
+import connectDb from "./config/database.js";
+import messageRoutes from "./routes/messageRoutes.js"
+import errorHandler from "./middlewares/errorHandler.js";
+
+const app = express();
+const server = http.createServer(app);
+
+app.use(cors());
+app.use(express.json());
+
+app.get('/health', (req, res) => res.json({ status: 'ok' }));
+
+app.use('/api/v1/messages', messageRoutes);
+
+
+
+app.use(errorHandler)
+
+const PORT = process.env.PORT || 3000;
+connectDb().then(() => {
+    server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+})
