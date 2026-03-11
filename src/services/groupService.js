@@ -25,6 +25,7 @@ class GroupService {
         if (!group) {
             const error = new Error(`Group with channelId "${channelId}" not found`);
             error.statusCode = 404;
+            throw error;
         }
         await Conversation.updateOne({ uid, channel_id: channelId }, { $setOnInsert: { uid, channel_id: channelId, } } , { upsert: true });
         return group;

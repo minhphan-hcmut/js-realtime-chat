@@ -24,7 +24,7 @@ const messageSchema = new mongoose.Schema({
     },
 }, { timestamps: true, collection: 'messages' })
 
-messageSchema.index({channel_id: 1, message_seq: 1})
+messageSchema.index({channel_id: 1, message_seq: 1}, {unique: true})
 
 // const Message = mongoose.model('Messages', messageSchema)
 

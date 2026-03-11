@@ -13,15 +13,22 @@ class GroupController {
     }
     static async joinGroup(req, res, next) {
         try { 
-            const { } = req.body;
-            const 
+            const {channelId, uid} = req.body;
+            const group = await GroupService.joinGroup({ channelId, uid });
+            res.status(201).json({ success: true, data: group });
         }
         catch (err) {
-            next(err)
+            next(err);
         }
     }
-    static async listGroup(req, res, next) {
-
+    static async listGroups(req, res, next) {
+        try {
+            const { uid } = req.query;
+            const groups = await GroupService.listGroups({ uid });
+            res.status(201).json({success: true, data: groups})
+        } catch (err) {
+            next(err);
+        }
     }
 }
 

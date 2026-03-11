@@ -6,18 +6,20 @@ import { WebSocketServer } from 'ws';
 
 import connectDb from "./config/database.js";
 import messageRoutes from "./routes/messageRoutes.js"
+import groupRoutes from "./routes/groupRoutes.js"
 import errorHandler from "./middlewares/errorHandler.js";
 
 const app = express();
 const server = http.createServer(app);
+const prefixUri = '/api/v1';
 
 app.use(cors());
 app.use(express.json());
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
-app.use('/api/v1/messages', messageRoutes);
-
+app.use(`${prefixUri}/messages`, messageRoutes);
+app.use(`${prefixUri}/groups`, groupRoutes);
 
 
 app.use(errorHandler)
