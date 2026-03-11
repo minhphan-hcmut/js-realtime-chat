@@ -8,6 +8,7 @@ import connectDb from "./config/database.js";
 import messageRoutes from "./routes/messageRoutes.js"
 import groupRoutes from "./routes/groupRoutes.js"
 import errorHandler from "./middlewares/errorHandler.js";
+import { register, unregister } from './websockets/socketManager.js';
 
 const app = express();
 const server = http.createServer(app);
@@ -23,6 +24,18 @@ app.use(`${prefixUri}/groups`, groupRoutes);
 
 
 app.use(errorHandler)
+
+const wss = new WebSocketServer({ server });
+wss.on('connection', (ws, req) => {
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    const uid = url.searchParams.get('uid');
+    if (!uid) {
+        ws.close(4001, 'Missing uid'); return;
+    }
+    register(uid, ws);
+    ws.on('close', () => unregister(uid, ws));
+    ws.on('message', (data) => console.log(`[WS] Message from ${uid}:`, data.toString()));
+})
 
 const PORT = process.env.PORT || 3000;
 connectDb().then(() => {

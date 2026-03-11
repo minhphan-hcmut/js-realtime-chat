@@ -15,7 +15,7 @@ const messageExtraSchema = new mongoose.Schema({
     }
 })
 
-messageExtraSchema.index({message_id: 1, uid: 1})
+messageExtraSchema.index({message_id: 1, uid: 1}, {unique: true})
 
 const MessageExtra = mongoose.model('messageextras', messageExtraSchema)
 

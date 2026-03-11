@@ -18,6 +18,6 @@ const channelOffsetSchema = new mongoose.Schema({
 
 channelOffsetSchema.index({ uid: 1, channel_id: 1 }, { unique: true });
 
-const Channel = mongoose.model('Channels', channelOffsetSchema)
+const ChannelOffset = mongoose.model('ChannelOffset', channelOffsetSchema)
 
-export default Channel;
+export default ChannelOffset;
