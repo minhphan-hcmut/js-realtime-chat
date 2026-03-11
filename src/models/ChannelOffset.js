@@ -14,7 +14,7 @@ const channelOffsetSchema = new mongoose.Schema({
         type: Number,
         default: 0
     }
-}, {timestamps: true, collation: 'channels_offsets'})
+}, {timestamps: true, collection: 'channel_offsets'})
 
 channelOffsetSchema.index({ uid: 1, channel_id: 1 }, { unique: true });
 
