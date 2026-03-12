@@ -18,7 +18,7 @@ class MessageController {
             next(err);
         }
     }
-    static async listMessage(req, res, next) {
+    static async listMessages(req, res, next) {
         try {
             const { uid, channelId, limit, startSeq } = req.query;
             const messages = await MessageService.getMessages({ uid, channelId, limit: limit ? parseInt(limit) : 50 , startSeq: startSeq ? parseInt(startSeq) : null,});

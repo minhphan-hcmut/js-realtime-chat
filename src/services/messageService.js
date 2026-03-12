@@ -67,7 +67,7 @@ class MessageService {
         const offset = await ChannelOffset.findOneAndUpdate(
             { uid, channel_id: channelId },
             { offset_msg_seq: latestMsg.message_seq },
-            {upsert: true, new: true}
+            {upsert: true, returnDocument: 'after'}
         )
         return offset;
     }
@@ -75,7 +75,7 @@ class MessageService {
         const extra = await MessageExtra.findOneAndUpdate(
             { message_id: messageId, uid },
             { is_deleted: true },
-            { upsert: true, new: true}
+            { upsert: true, returnDocument: 'after'}
         );
       return extra;
     }
@@ -88,7 +88,8 @@ class MessageService {
         const deletedMsgIds = deletedExtras.map(e => e.message_id);
 
         const MessageModel = getMessageModel(channelId);
-
+        // console.log(MessageModel);
+        console.log(channelId);
         const fromSeq = startSeq || offsetSeq;
 
         const query = {
