@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Group from "../models/Group.js";
 import getMessageModel from "../models/Message.js";
 import Conversation from "../models/Conversation.js";
@@ -72,11 +73,15 @@ class MessageService {
         return offset;
     }
     static async deleteForMe({ uid, messageId }) {
+        // if (!mongoose.Types.ObjectId.isValid(uid) || !mongoose.Types.ObjectId.isValid(messageId)) {
+        //     throw new Error("Invalid User ID or Message ID");
+        // }
         const extra = await MessageExtra.findOneAndUpdate(
-            { message_id: messageId, uid },
+            { message_id: messageId, 
+            uid: uid },
             { is_deleted: true },
             { upsert: true, returnDocument: 'after'}
-        );
+        ).lean();
       return extra;
     }
 
@@ -85,23 +90,26 @@ class MessageService {
         const offsetSeq = offset?.offset_msg_seq || 0;
 
         const deletedExtras = await MessageExtra.find({ uid, is_deleted: true }).lean();
-        const deletedMsgIds = deletedExtras.map(e => e.message_id);
+        console.log(deletedExtras)
+        const deletedMsgIds = deletedExtras.map(e => new mongoose.Types.ObjectId(e.message_id));
+        console.log(deletedMsgIds)
 
         const MessageModel = getMessageModel(channelId);
         // console.log(MessageModel);
-        console.log(channelId);
+        // console.log(channelId);
         const fromSeq = startSeq || offsetSeq;
 
         const query = {
             channel_id: channelId,
             message_seq: { $gt: fromSeq },
         };
-        
-        if (deletedMsgIds.length > 0) {
-            query._id = { $nin: deletedMsgIds };
+        const validDeletedIds = deletedMsgIds.filter(id => id && id !== "null");
+
+        if (validDeletedIds.length > 0) {
+            query._id = { $nin: validDeletedIds };
         }
 
-        const messages = (await MessageModel.find(query)).sort({ message_seq: 1 }).limit(limit).lean();
+        const messages = await MessageModel.find(query).sort({ message_seq: 1 }).limit(limit).lean();
         return messages;
     }
   

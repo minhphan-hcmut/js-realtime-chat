@@ -13,6 +13,7 @@ class MessageController {
                 type: 'new_message',
                 data: message
             })
+            console.log(message)
             return res.status(201).json({success: true, data: message})
         } catch (err) {
             next(err);
