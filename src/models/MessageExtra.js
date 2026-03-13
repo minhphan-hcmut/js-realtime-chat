@@ -2,11 +2,13 @@ import mongoose from "mongoose";
 
 const messageExtraSchema = new mongoose.Schema({
     message_id: {
-        type: String,
+        type: mongoose.Types.ObjectId,
+        ref: 'messages',
         required: true,
     }, 
     uid: {
-        type: String,
+        type: mongoose.Types.ObjectId,
+        ref: 'users',
         required: true
     },
     is_deleted: {
