@@ -90,9 +90,9 @@ class MessageService {
         const offsetSeq = offset?.offset_msg_seq || 0;
 
         const deletedExtras = await MessageExtra.find({ uid, is_deleted: true }).lean();
-        console.log(deletedExtras)
+        // console.log(deletedExtras)
         const deletedMsgIds = deletedExtras.map(e => new mongoose.Types.ObjectId(e.message_id));
-        console.log(deletedMsgIds)
+        // console.log(deletedMsgIds)
 
         const MessageModel = getMessageModel(channelId);
         // console.log(MessageModel);

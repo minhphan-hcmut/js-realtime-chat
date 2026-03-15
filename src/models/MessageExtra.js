@@ -7,7 +7,7 @@ const messageExtraSchema = new mongoose.Schema({
         required: true,
     }, 
     uid: {
-        type: mongoose.Types.ObjectId,
+        type: String,
         ref: 'users',
         required: true
     },

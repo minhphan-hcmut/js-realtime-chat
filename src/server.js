@@ -5,8 +5,9 @@ import http from 'http';
 import { WebSocketServer } from 'ws';
 
 import connectDb from "./config/database.js";
-import messageRoutes from "./routes/messageRoutes.js"
-import groupRoutes from "./routes/groupRoutes.js"
+import messageRoutes from "./routes/messageRoutes.js";
+import groupRoutes from "./routes/groupRoutes.js";
+import conversationRoutes from "./routes/conversationRoutes.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import { register, unregister } from './websockets/socketManager.js';
 
@@ -21,6 +22,7 @@ app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 app.use(`${prefixUri}/messages`, messageRoutes);
 app.use(`${prefixUri}/groups`, groupRoutes);
+app.use(`${prefixUri}/conversations`, conversationRoutes)
 
 
 app.use(errorHandler)
