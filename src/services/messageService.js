@@ -73,9 +73,6 @@ class MessageService {
         return offset;
     }
     static async deleteForMe({ uid, messageId }) {
-        // if (!mongoose.Types.ObjectId.isValid(uid) || !mongoose.Types.ObjectId.isValid(messageId)) {
-        //     throw new Error("Invalid User ID or Message ID");
-        // }
         const extra = await MessageExtra.findOneAndUpdate(
             { message_id: messageId, 
             uid: uid },

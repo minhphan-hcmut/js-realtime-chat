@@ -14,6 +14,7 @@ import { register, unregister } from './websockets/socketManager.js';
 const app = express();
 const server = http.createServer(app);
 const prefixUri = '/api/v1';
+const HEARTBEAT_INTERVAL = 30000;
 
 app.use(cors());
 app.use(express.json());
@@ -35,8 +36,26 @@ wss.on('connection', (ws, req) => {
         ws.close(4001, 'Missing uid'); return;
     }
     register(uid, ws);
+    ws.isAlive = true;
+    ws.on('pong', () => {
+        ws.isAlive = true;
+    })
+    
     ws.on('close', () => unregister(uid, ws));
     ws.on('message', (data) => console.log(`[WS] Message from ${uid}:`, data.toString()));
+})
+const heartbeatInterval = setInterval(() => {
+    wss.clients.forEach((ws) => {
+        if (!ws.isAlive) {
+            return ws.terminate();
+        }
+
+        ws.isAlive = false;
+        ws.ping();
+    });
+}, HEARTBEAT_INTERVAL);
+wss.on('close', () => {
+    clearInterval(heartbeatInterval);
 })
 
 const PORT = process.env.PORT || 3000;
