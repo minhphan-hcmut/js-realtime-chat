@@ -42,7 +42,9 @@ wss.on('connection', (ws, req) => {
     })
     
     ws.on('close', () => unregister(uid, ws));
-    ws.on('message', (data) => console.log(`[WS] Message from ${uid}:`, data.toString()));
+    // ws.on('message', (data) => console.log(`[WS] Message from ${uid}:`, data.toString()));
+
+    ws.on('message', (data) => logger.info('WS', ` Message from ${uid}:`, data.toString()));
 })
 const heartbeatInterval = setInterval(() => {
     wss.clients.forEach((ws) => {
@@ -60,5 +62,5 @@ wss.on('close', () => {
 
 const PORT = process.env.PORT || 3000;
 connectDb().then(() => {
-    server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    server.listen(PORT, () => logger.info(`Server running on port ${PORT}`));
 })
