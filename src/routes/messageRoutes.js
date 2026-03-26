@@ -3,10 +3,9 @@ import MessageController from "../controllers/messageController.js";
 import { validateBody, validateQuery } from "../middlewares/validator.js";
 import {
     sendMessageSchema,
-    listMessagesSchema,
-    clearHistorySchema,
-    deleteForMeSchema,
     listMessageSchema,
+    clearHistorySchema,
+    deleteForMeSchema
 } from '../validators/schemas.js';
 
 

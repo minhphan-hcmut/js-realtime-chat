@@ -10,6 +10,7 @@ import groupRoutes from "./routes/groupRoutes.js";
 import conversationRoutes from "./routes/conversationRoutes.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import { register, unregister } from './websockets/socketManager.js';
+import logger from './utils/logger.js'
 
 const app = express();
 const server = http.createServer(app);
