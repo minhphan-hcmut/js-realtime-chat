@@ -3,6 +3,7 @@ import  express from "express";
 import cors from 'cors';
 import http from 'http';
 import { WebSocketServer } from 'ws';
+import { parse } from 'url';
 
 import connectDb from "./config/database.js";
 import messageRoutes from "./routes/messageRoutes.js";
@@ -11,6 +12,7 @@ import conversationRoutes from "./routes/conversationRoutes.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import { register, unregister } from './websockets/socketManager.js';
 import logger from './utils/logger.js'
+import { authMiddleware } from './middlewares/authMiddleware.js';
 
 const app = express();
 const server = http.createServer(app);
@@ -22,13 +24,16 @@ app.use(express.json());
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
-app.use(`${prefixUri}/messages`, messageRoutes);
-app.use(`${prefixUri}/groups`, groupRoutes);
-app.use(`${prefixUri}/conversations`, conversationRoutes)
+app.use(`${prefixUri}/messages`, authMiddleware,messageRoutes);
+app.use(`${prefixUri}/groups`, authMiddleware,groupRoutes);
+app.use(`${prefixUri}/conversations`, authMiddleware, conversationRoutes)
 
 
 app.use(errorHandler)
-
+server.on('upgrade', (request, socket, head) => {
+    const { pathname, querry } = parse(request.url, true);
+    constken 
+}) 
 const wss = new WebSocketServer({ server });
 wss.on('connection', (ws, req) => {
     const url = new URL(req.url, `http://${req.headers.host}`);
