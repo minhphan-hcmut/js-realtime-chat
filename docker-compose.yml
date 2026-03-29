@@ -29,6 +29,17 @@ services:
     depends_on:
       - mongodb
 
-# Define named volumes (cleaner than mapping to a specific local folder)
+  # 3. Redis Service
+  redis:
+    image: redis:7.0-alpine
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+# Define named volumes
 volumes:
   mongo-data:
+  redis-data:
