@@ -1,0 +1,80 @@
+# =========================
+# Dependencies
+# =========================
+node_modules/
+/.pnp
+.pnp.js
+
+# =========================
+# Testing & Coverage
+# =========================
+coverage/
+.nyc_output/
+
+# =========================
+# Build Outputs & Directories
+# =========================
+dist/
+build/
+out/
+.next/
+.nuxt/
+.vuepress/dist
+.serverless/
+.output/
+
+# =========================
+# Environment Variables (CRITICAL)
+# =========================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+
+# =========================
+# Logs
+# =========================
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# =========================
+# Caches
+# =========================
+.npm
+.eslintcache
+.stylelintcache
+.tsbuildinfo
+.parcel-cache/
+.swc/
+.vite/
+
+# =========================
+# OS / Editor Files
+# =========================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDEs and Editors
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
