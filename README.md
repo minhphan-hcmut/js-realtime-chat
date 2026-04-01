@@ -125,15 +125,15 @@ src/
 
 ---
 
-## 💡 Engineering Decisions & Trade-offs
-
-- **Why `ws` instead of `Socket.io`?** 
-  To deeply understand the WebSocket protocol, handle ping-pong heartbeats manually to detect "zombie" TCP connections, and optimize the transport layer payload size over standard JSON.
-- **Cursor Pagination vs Skip/Limit:** 
-  Standard `skip()` requires scanning and discarding previous entries, resulting in O(N) complexity. By indexing `message_seq` and utilizing range queries (`$lt`), we achieve O(1) fetch performance for chat histories.
-- **Why Redis?** 
-  In a single-instance Node.js app, keeping an In-Memory `Map` of users works. But to support C10K+ users, the app must run on multiple CPU cores / machines. Redis facilitates internal communication (Pub/Sub) between these detached instances.
-
+<!-- ## 💡 Engineering Decisions & Trade-offs -->
+<!---->
+<!-- - **Why `ws` instead of `Socket.io`?**  -->
+<!--   To deeply understand the WebSocket protocol, handle ping-pong heartbeats manually to detect "zombie" TCP connections, and optimize the transport layer payload size over standard JSON. -->
+<!-- - **Cursor Pagination vs Skip/Limit:**  -->
+<!--   Standard `skip()` requires scanning and discarding previous entries, resulting in O(N) complexity. By indexing `message_seq` and utilizing range queries (`$lt`), we achieve O(1) fetch performance for chat histories. -->
+<!-- - **Why Redis?**  -->
+<!--   In a single-instance Node.js app, keeping an In-Memory `Map` of users works. But to support C10K+ users, the app must run on multiple CPU cores / machines. Redis facilitates internal communication (Pub/Sub) between these detached instances. -->
+<!---->
 ---
 
 <div align="center">
