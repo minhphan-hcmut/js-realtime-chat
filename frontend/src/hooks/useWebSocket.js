@@ -5,14 +5,18 @@ export function useWebSocket(onMessageReceived) {
   const { accessToken } = useAuthStore();
   const ws = useRef(null);
   const [isConnected, setIsConnected] = useState(false);
+  
+  // Keep the latest callback in a ref to prevent infinite re-renders
+  const callbackRef = useRef(onMessageReceived);
+
+  useEffect(() => {
+     callbackRef.current = onMessageReceived;
+  }, [onMessageReceived]);
 
   useEffect(() => {
     if (!accessToken) return;
 
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    // Use the proxy port or the direct backend port. Assuming backend is on 3000
-    // During dev proxy is on 5173 but WS proxy needs Vite config adjustment. 
-    // We connect directly to backend 3000 for simplicity here.
     const wsUrl = `${protocol}//localhost:3000?token=${accessToken}`;
     
     ws.current = new WebSocket(wsUrl);
@@ -25,8 +29,8 @@ export function useWebSocket(onMessageReceived) {
     ws.current.onmessage = (event) => {
       try {
          const payload = JSON.parse(event.data);
-         if (payload.type === 'new_message') {
-            onMessageReceived(payload.data);
+         if (payload.type === 'new_message' && callbackRef.current) {
+            callbackRef.current(payload.data);
          }
       } catch (err) {
          console.error('Invalid WS message', err);
@@ -47,7 +51,7 @@ export function useWebSocket(onMessageReceived) {
          ws.current.close();
       }
     };
-  }, [accessToken, onMessageReceived]);
+  }, [accessToken]);
 
   return { isConnected };
 }

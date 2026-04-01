@@ -11,10 +11,13 @@ import {
 
 const router = Router();
 
-router.post('/send', validateBody(sendMessageSchema),MessageController.sendMessage);
-router.get('/list', validateQuery(listMessageSchema),MessageController.listMessages);
-router.post('/clear', validateQuery(clearHistorySchema),MessageController.clearHistory);
-router.post('/delete', validateBody(deleteForMeSchema),MessageController.deleteForMe);
-
+// router.post('/send', validateBody(sendMessageSchema),MessageController.sendMessage);
+// router.get('/list', validateQuery(listMessageSchema),MessageController.listMessages);
+// router.post('/clear', validateQuery(clearHistorySchema),MessageController.clearHistory);
+// router.post('/delete', validateBody(deleteForMeSchema),MessageController.deleteForMe);
+ router.post('/send',MessageController.sendMessage);
+router.get('/list', MessageController.listMessages);
+router.post('/clear', MessageController.clearHistory);
+router.post('/delete',MessageController.deleteForMe);
 
 export default router;

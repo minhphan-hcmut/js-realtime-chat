@@ -9,11 +9,15 @@ const useAuthStore = create((set) => ({
   login: async (email, password) => {
     try {
       const { data } = await api.post('/auth/login', { email, password });
-      localStorage.setItem('accessToken', data.data.accessToken);
-      set({ user: data.data.user, accessToken: data.data.accessToken });
+      localStorage.setItem('accessToken', data.accessToken);
+      set({ user: data.data, accessToken: data.accessToken });
       return true;
     } catch (error) {
-      console.error('Login failed', error);
+      if (error.response?.status === 400) {
+        // Expected behavior for wrong credentials.
+        return false;
+      }
+      console.error('Login system error', error);
       return false;
     }
   },

@@ -11,7 +11,7 @@ export const authMiddleware = (req, res, next) => {
     });
     jwt.verify(token, config.jwt_access_secret, (err, decoded) => {
         if (err) return res.status(403).json({ success: false, message: 'Token is outdated or wrong - Forbidden'})
+        req.user = decoded;
     })
-    req.user = decoded;
     next();
 }

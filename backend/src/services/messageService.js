@@ -31,7 +31,6 @@ class MessageService {
                 if (err.code === 11000 && attempt < MAX_RETRIES - 1) {
                     continue;
                 }
-                console.log('HIHI')
                 throw err;
             }
         }

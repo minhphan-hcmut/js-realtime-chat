@@ -14,7 +14,7 @@ export default function ChatBox({ channelId }) {
     // but we can fetch history here initially
     const fetchHistory = async () => {
       try {
-         const res = await api.get(`/messages/list?channelId=${channelId}`);
+         const res = await api.get(`/messages/list?channelId=${channelId}&uid=${user?.uid}`);
          if (res.data?.data) {
              setMessages(res.data.data.reverse()); // Reverse to get oldest first
          }
