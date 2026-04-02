@@ -19,6 +19,7 @@ provider "proxmox" {
 resource "proxmox_virtual_environment_vm" "cicd_server" {
   name      = "cicd-jenkins-server"
   node_name = "devopslab"
+  
 
   clone {
     vm_id = 9000 # ID của template ubuntu-2204-cloudinit-template
@@ -50,6 +51,12 @@ resource "proxmox_virtual_environment_vm" "cicd_server" {
         gateway = "192.168.1.1"
       }
     }
+    user_account {
+      username = "ubuntu"
+      keys     = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBt+BEqfWoU2S8+bx46zNr9ANmFlrOoDGOkIq4ofi1lt phanminhkaneki@gmail.com"
+      ]
+    }
   }
 }
 
@@ -57,7 +64,7 @@ resource "proxmox_virtual_environment_vm" "cicd_server" {
 resource "proxmox_virtual_environment_vm" "app_server" {
   name      = "prod-app-server"
   node_name = "devopslab"
-
+  
   clone {
     vm_id = 9000
   }
@@ -81,12 +88,19 @@ resource "proxmox_virtual_environment_vm" "app_server" {
     model  = "virtio"
   }
 
+  
   initialization {
     ip_config {
       ipv4 {
         address = "192.168.1.102/24"
         gateway = "192.168.1.1"
       }
+    }
+    user_account {
+      username = "ubuntu"
+      keys     = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBt+BEqfWoU2S8+bx46zNr9ANmFlrOoDGOkIq4ofi1lt phanminhkaneki@gmail.com"
+      ]
     }
   }
 }
@@ -99,7 +113,6 @@ resource "proxmox_virtual_environment_vm" "db_server" {
   clone {
     vm_id = 9000
   }
-
   cpu {
     cores = 4
   }
@@ -118,7 +131,7 @@ resource "proxmox_virtual_environment_vm" "db_server" {
     bridge = "vmbr0"
     model  = "virtio"
   }
-
+  
   initialization {
     ip_config {
       ipv4 {
@@ -126,5 +139,14 @@ resource "proxmox_virtual_environment_vm" "db_server" {
         gateway = "192.168.1.1"
       }
     }
+    user_account {
+      username = "ubuntu"
+      keys     = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBt+BEqfWoU2S8+bx46zNr9ANmFlrOoDGOkIq4ofi1lt phanminhkaneki@gmail.com"
+      ]
+    }
   }
 }
+
+
+
