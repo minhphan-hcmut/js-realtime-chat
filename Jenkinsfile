@@ -5,7 +5,7 @@ pipeline {
     }
     environment {
         // --- GitLab Registry ---
-        GITLAB_REGISTRY_URL  = 'registry.gitlab.com/phanminhkaneki/js-realtime-chat'
+        GITLAB_REGISTRY_URL  = 'registry.gitlab.com'
         GITLAB_PROJECT_PATH  = 'phanminhkaneki/js-realtime-chat' // <-- THAY ĐỔI
 
         IMAGE_BACKEND  = "${GITLAB_REGISTRY_URL}/${GITLAB_PROJECT_PATH}/backend"
