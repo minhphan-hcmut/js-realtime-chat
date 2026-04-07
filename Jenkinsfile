@@ -1,6 +1,8 @@
 pipeline {
     agent { label 'docker' }
-
+    tools {
+      nodejs 'node20'
+    }
     environment {
         // --- GitLab Registry ---
         GITLAB_REGISTRY_URL  = 'registry.gitlab.com/phanminhkaneki/js-realtime-chat'
