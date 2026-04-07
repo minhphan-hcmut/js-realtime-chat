@@ -1,0 +1,6 @@
+---
+- name: Install Base Environment and Docker for all servers
+  hosts: all
+  become: yes # Chạy với quyền sudo
+  roles:
+    - ../roles/base_docker

@@ -1,0 +1,42 @@
+---
+- name: Cập nhật apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Cài đặt các công cụ quản trị cơ bản
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - git
+      - vim
+      - htop
+    state: present
+
+- name: Thêm Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Thêm Docker repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable
+    state: present
+
+- name: Cài đặt Docker và Docker Compose Plugin
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: present
+
+- name: Thêm user 'ubuntu' vào group 'docker' để không cần gõ sudo khi dùng docker
+  user:
+    name: ubuntu
+    groups: docker
+    append: yes

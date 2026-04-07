@@ -26,7 +26,7 @@ resource "proxmox_virtual_environment_vm" "cicd_server" {
   }
 
   cpu {
-    cores = 2
+    cores = 4
   }
 
   memory {
@@ -70,11 +70,11 @@ resource "proxmox_virtual_environment_vm" "app_server" {
   }
 
   cpu {
-    cores = 2
+    cores = 4
   }
 
   memory {
-    dedicated = 2048
+    dedicated = 4096
   }
 
   disk {
