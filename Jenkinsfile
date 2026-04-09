@@ -10,8 +10,8 @@ pipeline {
         REGISTRY_URL      = 'registry.gitlab.com'
         GITLAB_PROJECT    = 'phanminhkaneki/js-realtime-chat'   // <-- THAY ĐỔI nếu cần
 
-        IMAGE_FRONTEND    = "${REGISTRY_URL}/${GITLAB_PROJECT}"
-        IMAGE_BACKEND     = "${REGISTRY_URL}/${GITLAB_PROJECT}"
+        IMAGE_FRONTEND    = "${REGISTRY_URL}/${GITLAB_PROJECT}/frontend"
+        IMAGE_BACKEND     = "${REGISTRY_URL}/${GITLAB_PROJECT}/backend"
 
         // --- Production Server (Prod-App) ---
         PROD_HOST         = '192.168.1.102'                      // <-- THAY ĐỔI
