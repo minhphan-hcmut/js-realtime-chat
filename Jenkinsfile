@@ -67,11 +67,12 @@ pipeline {
                         env.FRONTEND_CHANGED = 'true'
                     } else {
                         def lines = changedFiles.split('\n')
-                        env.BACKEND_CHANGED = lines.any {
-                            it.startsWith('backend/') ||
-                            it == 'Jenkinsfile'       ||
-                            it == 'docker-compose.prod.yml'
-                        } ? 'true' : 'false'
+                        // env.BACKEND_CHANGED = lines.any {
+                        //     it.startsWith('backend/') ||
+                        //     it == 'Jenkinsfile'       ||
+                        //     it == 'docker-compose.prod.yml'
+                        // } ? 'true' : 'false'
+                        env.BACKEND_CHANGED = 'true'
 
                         // env.FRONTEND_CHANGED = lines.any {
                         //     it.startsWith('frontend/')
