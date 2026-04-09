@@ -73,9 +73,10 @@ pipeline {
                             it == 'docker-compose.prod.yml'
                         } ? 'true' : 'false'
 
-                        env.FRONTEND_CHANGED = lines.any {
-                            it.startsWith('frontend/')
-                        } ? 'true' : 'false'
+                        // env.FRONTEND_CHANGED = lines.any {
+                        //     it.startsWith('frontend/')
+                        // } ? 'true' : 'false'
+                        env.FRONTEND_CHANGED = 'true'
                     }
 
                     echo "Backend thay đổi  : ${env.BACKEND_CHANGED}"
