@@ -1,21 +1,16 @@
-import mongoose from "mongoose"
-// import { configDotenv } from "dotenv"
+import mongoose from "mongoose";
 
-// configDotenv()
-import config from "./index.js"
-const {mongodb_user, mongodb_password, mongodb_host, mongodb_db} = config;
-// const { MONGODB_USER, MONGODB_PASSWORD, MONGODB_HOST, MONGODB_DB } = process.env;
-const mongo_uri = `mongodb://${mongodb_user}:${mongodb_password}@${mongodb_host}:27017/${mongodb_db}?authSource=admin`;
-
+import config from "./index.js";
+const { mongodb_user, mongodb_password, mongodb_host, mongodb_db, mongodb_uri } =
+  config;
 async function connectDb() {
-    try {
-        mongoose.connect(mongo_uri)
-        console.log("MongoDB connected")
-    }
-    catch (err) {
-        console.log(`MongoDB connections failed: ${err}`)
-        process.exit(1)
-    }
+  try {
+    mongoose.connect(mongodb_uri);
+    console.log("MongoDB connected");
+  } catch (err) {
+    console.log(`MongoDB connections failed: ${err}`);
+    process.exit(1);
+  }
 }
 
-export default connectDb
+export default connectDb;
