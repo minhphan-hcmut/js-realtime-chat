@@ -150,7 +150,7 @@ pipeline {
             steps {
                 withCredentials([
                     usernamePassword(
-                        credentialsId: 'gitlab-registry-cred',
+                        credentialsId: 'gitlab-https-cred-id',
                         usernameVariable: 'REGISTRY_USER',
                         passwordVariable: 'REGISTRY_TOKEN'
                     )

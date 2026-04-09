@@ -8,7 +8,7 @@ export default {
   mongodb_password: process.env.MONGODB_PASSWORD,
   mongodb_host: process.env.MONGODB_HOST,
   mongodb_db: process.env.MONGODB_DB,
-  mongodb_uri: process.env.MONGODB_URI,
+  // mongodb_uri: process.env.MONGODB_URI,
   jwt_access_secret: process.env.JWT_ACCESS_SECRET,
   jwt_refresh_secret: process.env.JWT_REFRESH_SECRET,
   jwt_access_expires_in: process.env.JWT_ACCESS_EXPIRES_IN,
